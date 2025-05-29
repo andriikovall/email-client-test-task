@@ -10,6 +10,7 @@ export type Email = {
     email: string;
   }[];
   subject: string;
+  // to simplify we have the content already in the email object
   content: string;
   isRead: boolean;
   isDeleted: boolean;

@@ -1,5 +1,6 @@
 import { connectController } from "../../../utils/connectController";
 import { Folders } from "./components";
+import { EmailsList } from "./components/EmailsList/EmailsList.view";
 // todo: pretty import paths
 import { useMainController } from "./Main.controller";
 
@@ -23,42 +24,11 @@ const MainView = (props: MainViewProps) => {
 
   return (
     <div className="row h-100">
-      <div className="col-3 h-100 overflow-scroll border-end">
+      <div className="col-3 h-100 overflow-scroll border-end bg-body-tertiary">
         <Folders />
       </div>
       <div className="col-4 h-100 overflow-scroll border-end">
-        <p>Emails</p>
-        <p>Emails</p>
-        <p>Emails</p>
-        <p>Emails</p>
-        <p>Emails</p>
-        <p>Emails</p>
-        <p>Emails</p>
-        <p>Emails</p>
-        <p>Emails</p>
-        <p>Emails</p>
-        <p>Emails</p>
-        <p>Emails</p>
-        <p>Emails</p>
-        <p>Emails</p>
-        <p>Emails</p>
-        <p>Emails</p>
-        <p>Emails</p>
-        <p>Emails</p>
-        <p>Emails</p>
-        <p>Emails</p>
-        <p>Emails</p>
-        <p>Emails</p>
-        <p>Emails</p>
-        <p>Emails</p>
-        <p>Emails</p>
-        <p>Emails</p>
-        <p>Emails</p>
-        <p>Emails</p>
-        <p>Emails</p>
-        <p>Emails</p>
-        <p>Emails</p>
-        <p>Emails</p>
+        <EmailsList />
       </div>
       <div className="col-5 h-100 overflow-scroll">
         <p>Email</p>

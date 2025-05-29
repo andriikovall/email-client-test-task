@@ -1,0 +1,1 @@
+export { EmailItem } from "./EmailItem.view";
