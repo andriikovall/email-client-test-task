@@ -12,25 +12,21 @@ type EmailItemViewProps = {
 
 const EmailItemView = (props: EmailItemViewProps) => {
   const {
-    email: { id, subject, from, to, date, isRead, isDeleted, content },
+    email: { id, subject, from, date, isRead },
     onReadOrUnread,
     onDelete,
-    selected,
   } = props;
 
   return (
     <NavLink
       to={`email/${id}`}
       className={({ isActive }) =>
-        clsx("text-decoration-none", { "text-primary": isActive })
+        clsx("card btn btn-light text-start", { 
+            "bg-secondary bg-opacity-25": isActive,
+            "bg-primary bg-opacity-10": !isRead,
+        })
       }
     >
-      <div
-        className={clsx("card btn btn-light text-start", {
-          "bg-body-secondary": selected,
-          "bg-primary bg-opacity-10": !isRead,
-        })}
-      >
         {!isRead ? (
           <div
             style={{
@@ -55,7 +51,6 @@ const EmailItemView = (props: EmailItemViewProps) => {
           </div>
           {/* todo: context menu */}
         </div>
-      </div>
     </NavLink>
   );
 };
