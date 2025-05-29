@@ -1,10 +1,8 @@
-import { useSearchParams } from "react-router";
+import { useParams } from "react-router";
 import type { MainViewProps } from "./Main.view";
 
-export const useMainProps = (): MainViewProps => {
-  const [searchParams] = useSearchParams();
-  const emailId = searchParams.get('emailId');
-  const folderSlug = searchParams.get('folderSlug');
+export const useMainController = (): MainViewProps => {
+  const { emailId, folderSlug } = useParams();
 
   return {
     emailId,

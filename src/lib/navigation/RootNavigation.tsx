@@ -5,7 +5,12 @@ export const RootNavigation = () => {
   return (
     <Routes>
       <Route path="/" Component={Main} />
-      {/* for the future */}
+      <Route path="/folders/:folderSlug" Component={Main}>
+        <Route
+          path="email/:emailId?"
+          Component={Main}
+        />
+      </Route>
     </Routes>
   );
 };

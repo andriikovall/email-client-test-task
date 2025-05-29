@@ -20,4 +20,5 @@ export type Folder = {
   slug: string;
   name: string;
   icon: string;
+  count: number;
 };

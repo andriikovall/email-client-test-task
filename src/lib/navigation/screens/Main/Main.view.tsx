@@ -1,25 +1,32 @@
+import { connectController } from "../../../utils/connectController";
+import { Folders } from "./components";
+// todo: pretty import paths
+import { useMainController } from "./Main.controller";
+
 export type MainViewProps = {
   /**
    * If this is provided, we are in the email view and ignoring
    * the folderSlug
    */
-  emailId: string | null;
+  emailId: string | undefined;
   /**
    * If this is provided, we firstly check for the emailId and then
    * the folderSlug. If no emailId is provided, we show the emails list
    * with the placeholder that no email is selected.
    */
-  folderSlug: string | null;
+  folderSlug: string | undefined;
 };
 
-export const MainView = (props: MainViewProps) => {
+const MainView = (props: MainViewProps) => {
   const { emailId, folderSlug } = props;
-  console.log('emailId, folderSlug:', emailId, folderSlug);
+  console.log({ emailId, folderSlug });
 
   return (
     <div className="row h-100">
-      <div className="col-2 h-100 overflow-scroll border-end"></div>
-      <div className="col-5 h-100 overflow-scroll border-end">
+      <div className="col-3 h-100 overflow-scroll border-end">
+        <Folders />
+      </div>
+      <div className="col-4 h-100 overflow-scroll border-end">
         <p>Emails</p>
         <p>Emails</p>
         <p>Emails</p>
@@ -59,3 +66,5 @@ export const MainView = (props: MainViewProps) => {
     </div>
   );
 };
+
+export const Main = connectController(useMainController, MainView);
