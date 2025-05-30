@@ -1,27 +1,12 @@
+import { state, useStateObservable } from "@react-rxjs/core";
+import { EmailsService } from "../../../../../services/emails.service";
 import type { FoldersViewProps } from "./Folders.view";
 
 export const useFoldersController = (): FoldersViewProps => {
+  const folders = useStateObservable(state(EmailsService.getFolders()));
+
   return {
-    folders: [
-      {
-        slug: "inbox",
-        name: "Inbox",
-        icon: "📥",
-        count: 10,
-      },
-      {
-        slug: "drafts",
-        name: "Drafts",
-        icon: "📝",
-        count: 1,
-      },
-      {
-        slug: "spam",
-        name: "Spam",
-        icon: "🚧",
-        count: 0,
-      },
-    ],
-    loading: false,
+    folders
   };
 };
+

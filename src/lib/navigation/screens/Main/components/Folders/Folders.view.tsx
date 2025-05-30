@@ -5,20 +5,10 @@ import { useFoldersController } from "./Folders.controller";
 
 export type FoldersViewProps = {
   folders: Folder[];
-  loading: boolean;
 };
 
 const FoldersView = (props: FoldersViewProps) => {
-  const { folders, loading } = props;
-
-  if (loading) {
-    return (
-      <>
-        <h2 className="h4 mb-3">Folders</h2>
-        <div className="text-center p-4">Loading folders...</div>
-      </>
-    );
-  }
+  const { folders } = props;
 
   return (
     <div className="p-4">

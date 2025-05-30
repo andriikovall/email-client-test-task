@@ -5,21 +5,10 @@ import { useEmailsListController } from "./EmailsList.controller";
 
 export type EmailsListViewProps = {
   emails: Email[];
-  loading: boolean;
-  //   todo: maybe on press navigate to the email?
 };
 
 const EmailsListView = (props: EmailsListViewProps) => {
-  const { emails, loading } = props;
-
-  if (loading) {
-    return (
-      <>
-        <h2 className="h4 mb-3">Emails</h2>
-        <div className="text-center p-4">Loading emails...</div>
-      </>
-    );
-  }
+  const { emails } = props;
 
   return (
     <div>
@@ -31,6 +20,7 @@ const EmailsListView = (props: EmailsListViewProps) => {
             key={email.id}
             email={email}
             onReadOrUnread={function (): void {
+              // todo: add this to props
               throw new Error("Function not implemented.");
             }}
             onDelete={function (): void {

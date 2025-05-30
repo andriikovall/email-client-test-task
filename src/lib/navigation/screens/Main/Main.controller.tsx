@@ -1,5 +1,4 @@
 import { useParams } from "react-router";
-import type { MainViewProps } from "./Main.view";
 
 export const useMainController = (): MainViewProps => {
   const { emailId, folderSlug } = useParams();
@@ -7,5 +6,6 @@ export const useMainController = (): MainViewProps => {
   return {
     emailId,
     folderSlug,
+    // todo: on presses
   };
 };

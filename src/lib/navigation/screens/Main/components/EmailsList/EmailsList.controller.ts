@@ -1,160 +1,23 @@
+import { useParams } from "react-router";
 import type { EmailsListViewProps } from "./EmailsList.view";
+import { EmailsService } from "../../../../../services/emails.service";
+import { state, useStateObservable } from "@react-rxjs/core";
+
+const getEmails = state((folder: string) =>
+  EmailsService.getEmailsByFolder(folder)
+);
 
 export const useEmailsListController = (): EmailsListViewProps => {
+  const { folderSlug } = useParams();
+  const emails = useStateObservable(getEmails(folderSlug ?? "inbox"));
+
+  if (!folderSlug) {
+    return {
+      emails: [],
+    };
+  }
+
   return {
-    emails: [
-      {
-        id: "1",
-        subject: "Welcome to Our Platform! 🎉",
-        from: {
-          name: "Sarah Johnson",
-          email: "sarah.j@techcorp.com",
-        },
-        date: "2024-03-15",
-        to: [
-          { name: "New User", email: "user@example.com" }
-        ],
-        content: "<h1>Welcome!</h1><p>We're excited to have you join our community.</p>",
-        isRead: true,
-        isDeleted: false,
-      },
-      {
-        id: "2",
-        subject: "Your Order #12345 has been shipped",
-        from: {
-          name: "Amazon Support",
-          email: "support@amazon.com",
-        },
-        date: "2024-03-14",
-        to: [
-          { name: "Customer", email: "customer@example.com" }
-        ],
-        content: "<div>Your package is on its way! <strong>Tracking number: ABC123XYZ</strong></div>",
-        isRead: false,
-        isDeleted: false,
-      },
-      {
-        id: "3",
-        subject: "Meeting Reminder: Project Kickoff Some very long subject here",
-        from: {
-          name: "Michael Chen",
-          email: "m.chen@company.com",
-        },
-        date: "2024-03-13",
-        to: [
-          { name: "Team Lead", email: "lead@company.com" },
-          { name: "Project Manager", email: "pm@company.com" }
-        ],
-        content: "<p>Don't forget our meeting tomorrow at 10 AM.</p><ul><li>Agenda</li><li>Timeline</li></ul>",
-        isRead: true,
-        isDeleted: false,
-      },
-      {
-        id: "4",
-        subject: "Your subscription is expiring soon",
-        from: {
-          name: "Netflix",
-          email: "billing@netflix.com",
-        },
-        date: "2024-03-12",
-        to: [
-          { name: "Subscriber", email: "subscriber@example.com" }
-        ],
-        content: "<h2>Renew your subscription</h2><p>Click here to continue enjoying our service.</p>",
-        isRead: false,
-        isDeleted: true,
-      },
-      {
-        id: "5",
-        subject: "Password Reset Request",
-        from: {
-          name: "Security Team",
-          email: "security@company.com",
-        },
-        date: "2024-03-11",
-        to: [
-          { name: "User", email: "user@company.com" }
-        ],
-        content: "<p>Click the link below to reset your password:</p><a href='#'>Reset Password</a>",
-        isRead: true,
-        isDeleted: false,
-      },
-      {
-        id: "6",
-        subject: "New Comment on Your Post",
-        from: {
-          name: "Social Media",
-          email: "notifications@social.com",
-        },
-        date: "2024-03-10",
-        to: [
-          { name: "Content Creator", email: "creator@example.com" }
-        ],
-        content: "<div>Someone commented: <blockquote>Great post!</blockquote></div>",
-        isRead: false,
-        isDeleted: false,
-      },
-      {
-        id: "7",
-        subject: "Invoice #INV-2024-007",
-        from: {
-          name: "Billing Department",
-          email: "billing@service.com",
-        },
-        date: "2024-03-09",
-        to: [
-          { name: "Client", email: "client@company.com" }
-        ],
-        content: "<table><tr><th>Item</th><th>Amount</th></tr><tr><td>Service</td><td>$99.99</td></tr></table>",
-        isRead: true,
-        isDeleted: false,
-      },
-      {
-        id: "8",
-        subject: "Job Application Status Update",
-        from: {
-          name: "HR Department",
-          email: "hr@company.com",
-        },
-        date: "2024-03-08",
-        to: [
-          { name: "Applicant", email: "applicant@example.com" }
-        ],
-        content: "<p>Thank you for your application. We would like to schedule an interview.</p>",
-        isRead: false,
-        isDeleted: false,
-      },
-      {
-        id: "9",
-        subject: "Your Weekly Newsletter",
-        from: {
-          name: "News Team",
-          email: "news@media.com",
-        },
-        date: "2024-03-07",
-        to: [
-          { name: "Subscriber", email: "subscriber@example.com" }
-        ],
-        content: "<h1>This Week's Highlights</h1><ul><li>News 1</li><li>News 2</li></ul>",
-        isRead: true,
-        isDeleted: true,
-      },
-      {
-        id: "10",
-        subject: "System Maintenance Notice",
-        from: {
-          name: "IT Department",
-          email: "it@company.com",
-        },
-        date: "2024-03-06",
-        to: [
-          { name: "All Users", email: "users@company.com" }
-        ],
-        content: "<div class='alert'>System will be down for maintenance on Saturday.</div>",
-        isRead: false,
-        isDeleted: false,
-      },
-    ],
-    loading: false,
+    emails,
   };
 };

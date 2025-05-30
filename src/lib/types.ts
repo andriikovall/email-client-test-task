@@ -14,7 +14,7 @@ export type Email = {
   content: string;
   isRead: boolean;
   isDeleted: boolean;
-  folderSlug?: string;
+  folderSlug: string | undefined;
 };
 
 export type Folder = {
