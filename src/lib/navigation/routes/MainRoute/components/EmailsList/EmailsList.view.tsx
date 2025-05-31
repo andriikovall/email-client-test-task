@@ -28,7 +28,6 @@ const EmailsListView = (props: EmailsListViewProps) => {
             email={email}
             onReadOrUnread={() => onReadOrUnread(email)}
             onDelete={() => onDelete(email)}
-            selected={false}
           />
         ))}
       </ul>

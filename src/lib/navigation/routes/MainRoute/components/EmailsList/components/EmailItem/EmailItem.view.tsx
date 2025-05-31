@@ -8,8 +8,6 @@ type EmailItemViewProps = {
   email: Email;
   onReadOrUnread: () => void;
   onDelete: () => void;
-  //   todo: call onReadOrUnread each time the email is selected
-  selected: boolean;
 };
 
 const EmailItemView = (props: EmailItemViewProps) => {
@@ -63,7 +61,6 @@ const EmailItemView = (props: EmailItemViewProps) => {
             <strong>Date:</strong> {date}
           </p>
         </div>
-        {/* todo: context menu */}
       </div>
     </NavLink>
   );
