@@ -4,7 +4,7 @@ import { EmailsService } from "../../../../../services/emails.service";
 import { of } from "rxjs";
 import { bind } from "@react-rxjs/core";
 import { sanitizeHTML } from "./utils/sanitizeHtml";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 
 const [useEmail] = bind((emailId: string | undefined) => {
   if (!emailId) {
@@ -16,8 +16,22 @@ const [useEmail] = bind((emailId: string | undefined) => {
 export const useEmailPreviewController = (): EmailPreviewViewProps => {
   const { emailId } = useParams();
 
-  
   const email = useEmail(emailId);
+
+  const onMarkAsReadOrUnread = useCallback(() => {
+    if (!emailId) {
+      return;
+    }
+    console.log('emailId: IN CONTROLLER', emailId);
+    EmailsService.markAsReadOrUnread(emailId);
+  }, [emailId]);
+
+  const onDelete = useCallback(() => {
+    if (!emailId) {
+      return;
+    }
+    EmailsService.deleteEmail(emailId);
+  }, [emailId]);
 
   const sanitizedEmailHTML = useMemo(() => {
     if (!email) {
@@ -29,13 +43,7 @@ export const useEmailPreviewController = (): EmailPreviewViewProps => {
   return {
     email,
     sanitizedEmailHTML,
-    onMarkAsReadOrUnread: () => {
-      // todo: add this to props
-      throw new Error("Function not implemented.");
-    },
-    onDelete: () => {
-      // todo: add this to props
-      throw new Error("Function not implemented.");
-    },
+    onMarkAsReadOrUnread,
+    onDelete,
   };
 };

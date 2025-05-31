@@ -1,4 +1,12 @@
-import { BehaviorSubject, combineLatest, delay, map, Observable, of, tap } from "rxjs";
+import {
+  BehaviorSubject,
+  combineLatest,
+  delay,
+  map,
+  Observable,
+  of,
+  tap,
+} from "rxjs";
 import type { Email, Folder } from "../types";
 import { MOCK_EMAILS } from "./mocks/emails";
 import { MOCK_FOLDERS } from "./mocks/folders";
@@ -11,7 +19,11 @@ class EmailsServiceClass {
     return this.emails$.pipe(
       delay(2000),
       // todo: check for default folder logic
-      map((emails) => emails.filter((email) => email.folderSlug === folder)),
+      map((emails) =>
+        emails.filter(
+          (email) => email.folderSlug === folder && !email.isDeleted
+        )
+      )
     );
   }
 
@@ -22,26 +34,20 @@ class EmailsServiceClass {
     );
   }
 
-  public markAsReadOrUnread(id: string): Observable<void> {
-    return this.emails$.pipe(
-      delay(1000),
-      map((emails) =>
-        emails.map((email) =>
-          email.id === id ? { ...email, isRead: !email.isRead } : email
-        )
-      ),
-      tap((emails) => this.emails$.next(emails)),
-      map(() => undefined)
+  public markAsReadOrUnread(id: string): void {
+    const currentEmails = this.emails$.getValue();
+    const newEmails = currentEmails.map((email) =>
+      email.id === id ? { ...email, isRead: !email.isRead } : email
     );
+    // todo: think about suspending and loading
+    this.emails$.next(newEmails);
   }
 
-  public deleteEmail(id: string): Observable<void> {
-    return this.emails$.pipe(
-      delay(1000),
-      map((emails) => emails.filter((email) => email.id !== id)),
-      tap((emails) => this.emails$.next(emails)),
-      map(() => undefined)
-    );
+  public deleteEmail(id: string): void {
+    const currentEmails = this.emails$.getValue();
+    const newEmails = currentEmails.filter((email) => email.id !== id);
+    // todo: think about suspending and loading
+    this.emails$.next(newEmails);
   }
 
   public getFolders(): Observable<Folder[]> {
@@ -49,7 +55,8 @@ class EmailsServiceClass {
       map(([folders, emails]) =>
         folders.map((folder) => ({
           ...folder,
-          count: emails.filter((email) => email.folderSlug === folder.slug).length,
+          count: emails.filter((email) => email.folderSlug === folder.slug)
+            .length,
         }))
       )
     );

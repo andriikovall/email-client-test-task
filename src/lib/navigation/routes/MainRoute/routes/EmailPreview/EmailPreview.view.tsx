@@ -10,7 +10,7 @@ export type EmailPreviewViewProps = {
 };
 
 const EmailPreviewView = (props: EmailPreviewViewProps) => {
-  const { email, sanitizedEmailHTML } = props;
+  const { email, onDelete, onMarkAsReadOrUnread, sanitizedEmailHTML } = props;
 
   if (!email) {
     return <div className="mt-4">No email selected</div>;
@@ -29,7 +29,24 @@ const EmailPreviewView = (props: EmailPreviewViewProps) => {
   return (
     <div className="card border-0">
       <div className="card-body p-4">
-        <h2 className="h4 card-title mb-3">{email.subject}</h2>
+        <div className="d-flex justify-content-between align-items-center mb-3">
+          <h2 className="h4 mb-0 card-title me-2">{email.subject}</h2>
+          <div className="btn-group col-4">
+            <button 
+              className="btn btn-light"
+              onClick={onMarkAsReadOrUnread}
+            >
+              {/* todo: store icons in a separate file */}
+              {email.isRead ? '📕 Unread' : '📖 Read'}
+            </button>
+            <button 
+              className="btn btn-light"
+              onClick={onDelete}
+            >
+              ❌ Delete
+            </button>
+          </div>
+        </div>
         <div className="card-text mb-4 text-muted small border-bottom pb-2">
           <div className="mb-2">
             <span className="fw-semibold">From:</span> {from}
