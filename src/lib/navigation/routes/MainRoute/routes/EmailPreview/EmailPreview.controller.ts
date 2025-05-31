@@ -27,11 +27,11 @@ export const useEmailPreviewController = (): EmailPreviewViewProps => {
   }, [emailId]);
 
   const onDelete = useCallback(() => {
-    if (!emailId) {
+    if (!email) {
       return;
     }
-    EmailsService.deleteEmail(emailId);
-  }, [emailId]);
+    EmailsService.deleteEmail(email);
+  }, [email]);
 
   const sanitizedEmailHTML = useMemo(() => {
     if (!email) {

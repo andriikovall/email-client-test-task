@@ -5,7 +5,6 @@ import {
   map,
   Observable,
   of,
-  tap,
 } from "rxjs";
 import type { Email, Folder } from "../types";
 import { MOCK_EMAILS } from "./mocks/emails";
@@ -43,9 +42,12 @@ class EmailsServiceClass {
     this.emails$.next(newEmails);
   }
 
-  public deleteEmail(id: string): void {
+  public deleteEmail(email: Email): void {
+    if (!confirm(`Are you sure you want to delete the email from ${email.from.email}?`)) {
+      return;
+    }
     const currentEmails = this.emails$.getValue();
-    const newEmails = currentEmails.filter((email) => email.id !== id);
+    const newEmails = currentEmails.filter((e) => e.id !== email.id);
     // todo: think about suspending and loading
     this.emails$.next(newEmails);
   }
