@@ -49,6 +49,7 @@ Deployed with **Netlify**
 - [x] Features and Behavior
   - [x] Emails are sorted by date and grouped by folder
   - [x] Preview email by clicking on the email in the list
+    - Used [sanitize-html](https://www.npmjs.com/package/sanitize-html) to sanitize the html
   - [x] Mark email as read or unread
   - [x] Delete email
   - [x] Simulate new email
@@ -64,6 +65,16 @@ Deployed with **Netlify**
 - [x] Data storage
   - [x] Mock data is stored in the `src/lib/services/mocks/emails.ts` file
   - [ ] Simulate network request and delay (had issues with `Suspense` and loading, will share the details below)
+
+
+Ignored for the sake of the test task:
+- Any proper caching
+- Error handling
+- TS import path config
+- Lazy loading scroll feature for the emails list (currently it's just a list long list of the emails all together)
+- UI is very simple
+- No responsive design for the mobile
+- Email preview implemented in the simplest way possible with basic sanitization [sanitize-html](https://www.npmjs.com/package/sanitize-html) and putting HTML to the DOM directly
 
 ## Tech challenges faced and their solutions
 
@@ -211,4 +222,6 @@ In future it's better to give the services less responsibility and split them to
 
 ### Managing the Suspense and loading states ⏳
 
-I still encounter issues with the `Suspense` and loading states for the actions like deleting the email or making it read. Still looking for the best approach to handle this in terms of the `RxJS`, `Suspense` and `React`. It should be some kind of a `React` `transition`.
+I still encounter issues with the `Suspense` and loading states for the actions like deleting the email or making it read. I used `delay` operator to simulate the network request and delay and I didn't understand how to properly handle the loading state.
+
+Still looking for the best approach to handle this in terms of the `RxJS`, `Suspense` and `React`. It should be some kind of a `React` `transition`. WIP
