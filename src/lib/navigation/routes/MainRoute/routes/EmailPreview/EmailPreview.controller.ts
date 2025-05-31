@@ -3,6 +3,8 @@ import type { EmailPreviewViewProps } from "./EmailPreview.view";
 import { EmailsService } from "../../../../../services/emails.service";
 import { of } from "rxjs";
 import { bind } from "@react-rxjs/core";
+import { sanitizeHTML } from "./utils/sanitizeHtml";
+import { useMemo } from "react";
 
 const [useEmail] = bind((emailId: string | undefined) => {
   if (!emailId) {
@@ -14,12 +16,19 @@ const [useEmail] = bind((emailId: string | undefined) => {
 export const useEmailPreviewController = (): EmailPreviewViewProps => {
   const { emailId } = useParams();
 
+  
   const email = useEmail(emailId);
 
-  console.log("email:", email);
+  const sanitizedEmailHTML = useMemo(() => {
+    if (!email) {
+      return "";
+    }
+    return sanitizeHTML(email.content);
+  }, [email]);
 
   return {
     email,
+    sanitizedEmailHTML,
     onMarkAsReadOrUnread: () => {
       // todo: add this to props
       throw new Error("Function not implemented.");

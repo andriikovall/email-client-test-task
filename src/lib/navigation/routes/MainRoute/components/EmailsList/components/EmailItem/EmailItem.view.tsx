@@ -12,23 +12,31 @@ type EmailItemViewProps = {
 
 const EmailItemView = (props: EmailItemViewProps) => {
   const {
-    email: { id, subject, from, date, isRead },
-    onReadOrUnread,
-    onDelete,
+    email,
   } = props;
+
+  const date = new Date(email.date).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+
+  const from = email.from.name ? `${email.from.name} <${email.from.email}>` : email.from.email;
 
   return (
     <NavLink
-      to={`email/${id}`}
+      to={`email/${email.id}`}
       className={({ isActive }) =>
         clsx("card btn btn-light text-start", { 
             "bg-secondary bg-opacity-25": isActive,
-            "bg-primary bg-opacity-10": !isRead,
+            "bg-primary bg-opacity-10": !email.isRead,
         })
       }
       viewTransition
     >
-        {!isRead ? (
+        {!email.isRead ? (
           <div
             style={{
               position: "absolute",
@@ -41,10 +49,10 @@ const EmailItemView = (props: EmailItemViewProps) => {
           />
         ) : null}
         <div className="card-body p-2">
-          <h3 className="card-title h5">{subject}</h3>
+          <h3 className="card-title h5">{email.subject}</h3>
           <div className="card-text">
             <p className="mb-1">
-              <strong>From:</strong> {from.name} &lt;{from.email}&gt;
+              <strong>From:</strong> {from}
             </p>
             <p className="mb-1">
               <strong>Date:</strong> {date}
