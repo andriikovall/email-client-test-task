@@ -53,6 +53,7 @@ Deployed with **Netlify**
   - [x] Mark email as read or unread
   - [x] Delete email
   - [x] Simulate new email
+    - Added to any of the folders randomly
   - [x] Email has context menu to mark as read or unread and delete
   - [x] Empty state for the emails list of the folder
   - [ ] Empty state for the email (after the email is deleted or url has the id of the missing email)
@@ -75,6 +76,7 @@ Ignored for the sake of the test task:
 - UI is very simple
 - No responsive design for the mobile
 - Email preview implemented in the simplest way possible with basic sanitization [sanitize-html](https://www.npmjs.com/package/sanitize-html) and putting HTML to the DOM directly
+- In some places used icons in other places used text emojis
 
 ## Tech challenges faced and their solutions
 
