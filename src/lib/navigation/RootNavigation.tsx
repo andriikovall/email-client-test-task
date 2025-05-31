@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router";
 import { MainRoute } from "./routes";
-import { EmailPreview } from "./routes/MainRoute/components/EmailPreview";
+import { EmailPreview } from "./routes/MainRoute/routes/EmailPreview";
 
 export const RootNavigation = () => {
   return (
