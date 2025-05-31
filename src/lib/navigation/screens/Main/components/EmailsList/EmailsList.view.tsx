@@ -6,37 +6,32 @@ import { useEmailsListController } from "./EmailsList.controller";
 
 export type EmailsListViewProps = {
   emails: Email[];
-  folderSlug: string;
 };
 
 const EmailsListView = (props: EmailsListViewProps) => {
-  const { emails, folderSlug } = props;
+  const { emails } = props;
 
   return (
-    <div className="col-4 h-100 overflow-scroll border-end" key={folderSlug}>
-      <Suspense fallback={<div>Loading emails...</div>}>
-        <div>
-          {/* todo: pin title */}
-          <h2 className="h4 mt-4">Emails</h2>
-          <ul className="list-unstyled d-grid gap-2">
-            {emails.map((email) => (
-              <EmailItem
-                key={email.id}
-                email={email}
-                onReadOrUnread={function (): void {
-                  // todo: add this to props
-                  throw new Error("Function not implemented.");
-                }}
-                onDelete={function (): void {
-                  throw new Error("Function not implemented.");
-                }}
-                selected={false}
-              />
-            ))}
-          </ul>
-        </div>
-      </Suspense>
-    </div>
+    <Suspense fallback={<div>Loading emails...</div>}>
+      {/* todo: pin title */}
+      <h2 className="h4 mt-4">Emails</h2>
+      <ul className="list-unstyled d-grid gap-2">
+        {emails.map((email) => (
+          <EmailItem
+            key={email.id}
+            email={email}
+            onReadOrUnread={function (): void {
+              // todo: add this to props
+              throw new Error("Function not implemented.");
+            }}
+            onDelete={function (): void {
+              throw new Error("Function not implemented.");
+            }}
+            selected={false}
+          />
+        ))}
+      </ul>
+    </Suspense>
   );
 };
 

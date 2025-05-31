@@ -18,12 +18,10 @@ export const useEmailsListController = (): EmailsListViewProps => {
   if (!folderSlugParam) {
     return {
       emails: [],
-      folderSlug: folder,
     };
   }
 
   return {
     emails,
-    folderSlug: folder,
   };
 };
