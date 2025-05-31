@@ -14,6 +14,7 @@
     - [Defining the architecture](#defining-the-architecture)
       - [Components](#components)
       - [Services](#services)
+    - [Managing the Suspense and loading states ⏳](#managing-the-suspense-and-loading-states-)
 
 ## Overview
 This is a test task for the Senior Software Engineer job. The goal of this task is to implement a simple mail client using `React` and `RxJS` as a state manager.
@@ -207,3 +208,7 @@ src/lib/services
 ```
 
 In future it's better to give the services less responsibility and split them to data manipulation, data fetching and data caching.
+
+### Managing the Suspense and loading states ⏳
+
+I still encounter issues with the `Suspense` and loading states for the actions like deleting the email or making it read. Still looking for the best approach to handle this in terms of the `RxJS`, `Suspense` and `React`. It should be some kind of a `React` `transition`.
