@@ -1,7 +1,6 @@
 import {
   BehaviorSubject,
   combineLatest,
-  delay,
   map,
   Observable,
   of,
@@ -9,14 +8,14 @@ import {
 import type { Email, Folder } from "../types";
 import { MOCK_EMAILS } from "./mocks/emails";
 import { MOCK_FOLDERS } from "./mocks/folders";
+import { randomNumber } from "../utils/randomNumber";
 
 class EmailsServiceClass {
   public readonly emails$ = new BehaviorSubject<Email[]>(MOCK_EMAILS);
 
+  // todo: loading and delays
   public getEmailsByFolder(folder: string): Observable<Email[]> {
     return this.emails$.pipe(
-      delay(2000),
-      // todo: check for default folder logic
       map((emails) => this.filterEmailsByFolderAndDeleted(emails, folder)),
       map((emails) => this.sortEmails(emails))
     );
@@ -24,7 +23,6 @@ class EmailsServiceClass {
 
   public getEmailById(id: string): Observable<Email | undefined> {
     return this.emails$.pipe(
-      delay(1000),
       map((emails) => emails.find((email) => email.id === id))
     );
   }
@@ -33,8 +31,7 @@ class EmailsServiceClass {
     const currentEmails = this.emails$.getValue();
     const newEmails = currentEmails.map((email) =>
       email.id === id ? { ...email, isRead: !email.isRead } : email
-    );
-    // todo: think about suspending and loading
+    )
     this.emails$.next(newEmails);
   }
 
@@ -48,7 +45,6 @@ class EmailsServiceClass {
     }
     const currentEmails = this.emails$.getValue();
     const newEmails = currentEmails.filter((e) => e.id !== email.id);
-    // todo: think about suspending and loading
     this.emails$.next(newEmails);
   }
 
@@ -62,6 +58,14 @@ class EmailsServiceClass {
         }))
       )
     );
+  }
+
+  public addMockEmail(): void {
+    const currentEmails = this.emails$.getValue();
+    const randomEmail = MOCK_EMAILS[randomNumber(0, MOCK_EMAILS.length - 1)];
+    const id = Math.random().toString(36).substring(2, 16);
+    const newEmails = [...currentEmails, { ...randomEmail, id, date: new Date().toISOString() }];
+    this.emails$.next(newEmails);
   }
 
   private sortEmails(emails: Email[]): Email[] {

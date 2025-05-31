@@ -2,7 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router";
 import { Subscribe } from "@react-rxjs/core";
-import App from "./lib/App.tsx";
+import { App } from "./lib/App";
 import "./index.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 

@@ -1,10 +1,11 @@
+import { memo } from "react";
 import { Header } from "./components";
 import { RootNavigation } from "./navigation";
 
-function App() {
+const AppView = () => {
   return (
     <div className="h-100 d-flex flex-column">
-      <Header onAddEmail={() => {}} />
+      <Header />
       <div className="flex-grow-1 overflow-hidden">
         <RootNavigation />
       </div>
@@ -12,4 +13,4 @@ function App() {
   );
 }
 
-export default App;
+export const App = memo(AppView);
