@@ -7,7 +7,9 @@
   background-color: var(--bs-primary);
 }
 
-.email-item:hover .dropdown {
+.email-item:hover .dropdown,
+.email-item:focus .dropdown,
+.email-item:active .dropdown {
   visibility: visible;
 }
 

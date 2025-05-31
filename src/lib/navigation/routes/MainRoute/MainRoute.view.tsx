@@ -16,17 +16,17 @@ const MainRouteView = (props: MainRouteViewProps) => {
 
   return (
     <div className="row h-100">
-      <div className="col-3 h-100 overflow-scroll border-end bg-body-tertiary">
+      <div className="col-3 h-100 overflow-y-scroll border-end bg-body-tertiary">
         <Suspense fallback={<div className="text-center p-4">Loading folders...</div>}>
           <Folders />
         </Suspense>
       </div>
-      <div className="col-4 h-100 overflow-scroll border-end" key={folderSlug}>
+      <div className="col-4 h-100 overflow-y-scroll border-end" key={folderSlug}>
         <Suspense fallback={<div className="text-center p-4">Loading emails...</div>}>
           <EmailsList />
         </Suspense>
       </div>
-      <div className="col-5 h-100 overflow-scroll">
+      <div className="col-5 h-100 overflow-y-scroll">
         <Suspense fallback={<p className="text-center p-4">Loading email preview...</p>} key={emailId}>
           <Outlet />
         </Suspense>
