@@ -1,0 +1,1 @@
+export { MainRoute as MainRoute } from "./MainRoute";

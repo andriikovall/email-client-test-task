@@ -3,14 +3,14 @@ import { connectController } from "../../../utils/connectController";
 import { Folders } from "./components";
 import { EmailsList } from "./components/EmailsList";
 // todo: pretty import paths
-import { useMainController } from "./Main.controller";
+import { useMainRouteController } from "./MainRoute.controller";
 import { Outlet } from "react-router";
 
-export type MainViewProps = {
+export type MainRouteViewProps = {
   folderSlug: string;
 };
 
-const MainView = (props: MainViewProps) => {
+const MainRouteView = (props: MainRouteViewProps) => {
   const { folderSlug } = props;
 
   return (
@@ -32,4 +32,4 @@ const MainView = (props: MainViewProps) => {
   );
 };
 
-export const Main = memo(connectController(useMainController, MainView));
+export const MainRoute = memo(connectController(useMainRouteController, MainRouteView));
