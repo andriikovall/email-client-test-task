@@ -77,6 +77,7 @@ Ignored for the sake of the test task:
 - No responsive design for the mobile
 - Email preview implemented in the simplest way possible with basic sanitization [sanitize-html](https://www.npmjs.com/package/sanitize-html) and putting HTML to the DOM directly
 - In some places used icons in other places used text emojis
+- ect...
 
 ## Tech challenges faced and their solutions
 
