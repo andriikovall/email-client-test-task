@@ -26,6 +26,7 @@ const EmailItemView = (props: EmailItemViewProps) => {
             "bg-primary bg-opacity-10": !isRead,
         })
       }
+      viewTransition
     >
         {!isRead ? (
           <div

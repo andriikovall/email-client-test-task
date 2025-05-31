@@ -1,4 +1,4 @@
-import { BehaviorSubject, combineLatest, delay, forkJoin, map, Observable, of, shareReplay, tap } from "rxjs";
+import { BehaviorSubject, combineLatest, delay, forkJoin, map, Observable, of, shareReplay, startWith, tap } from "rxjs";
 import type { Email, Folder } from "../types";
 import { MOCK_EMAILS } from "./mocks/emails";
 import { MOCK_FOLDERS } from "./mocks/folders";
@@ -12,7 +12,6 @@ class EmailsServiceClass {
       delay(2000),
       // todo: check for default folder logic
       map((emails) => emails.filter((email) => email.folderSlug === folder)),
-      shareReplay(1),
     );
   }
 

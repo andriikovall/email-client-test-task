@@ -1,23 +1,29 @@
 import { useParams } from "react-router";
 import type { EmailsListViewProps } from "./EmailsList.view";
 import { EmailsService } from "../../../../../services/emails.service";
-import { state, useStateObservable } from "@react-rxjs/core";
+import { bind } from "@react-rxjs/core";
+import { DEFAULT_FOLDER_SLUG } from "../../../../../constants/folders";
 
-const getEmails = state((folder: string) =>
+const [useEmails] = bind((folder: string) =>
   EmailsService.getEmailsByFolder(folder)
 );
 
 export const useEmailsListController = (): EmailsListViewProps => {
-  const { folderSlug } = useParams();
-  const emails = useStateObservable(getEmails(folderSlug ?? "inbox"));
+  const { folderSlug: folderSlugParam } = useParams();
 
-  if (!folderSlug) {
+  const folder = folderSlugParam ?? DEFAULT_FOLDER_SLUG;
+
+  const emails = useEmails(folder);
+
+  if (!folderSlugParam) {
     return {
       emails: [],
+      folderSlug: folder,
     };
   }
 
   return {
     emails,
+    folderSlug: folder,
   };
 };
