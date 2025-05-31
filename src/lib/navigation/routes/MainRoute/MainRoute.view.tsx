@@ -8,10 +8,11 @@ import { Outlet } from "react-router";
 
 export type MainRouteViewProps = {
   folderSlug: string;
+  emailId: string | undefined;
 };
 
 const MainRouteView = (props: MainRouteViewProps) => {
-  const { folderSlug } = props;
+  const { folderSlug, emailId } = props;
 
   return (
     <div className="row h-100">
@@ -26,10 +27,14 @@ const MainRouteView = (props: MainRouteViewProps) => {
         </Suspense>
       </div>
       <div className="col-5 h-100 overflow-scroll">
-        <Outlet />
+        <Suspense fallback={<p>Loading email preview...</p>} key={emailId}>
+          <Outlet />
+        </Suspense>
       </div>
     </div>
   );
 };
 
-export const MainRoute = memo(connectController(useMainRouteController, MainRouteView));
+export const MainRoute = memo(
+  connectController(useMainRouteController, MainRouteView)
+);

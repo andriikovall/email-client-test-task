@@ -6,20 +6,13 @@ export type EmailPreviewViewProps = {
   email: Email | undefined;
   onMarkAsReadOrUnread: () => void;
   onDelete: () => void;
-  loading: boolean;
 };
 
-// todo: move each of them to a separate Screen and not the component
 const EmailPreviewView = (props: EmailPreviewViewProps) => {
-  const { email, onMarkAsReadOrUnread, onDelete, loading } = props;
-  console.log("email:", email);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  const { email, onMarkAsReadOrUnread, onDelete } = props;
 
   if (!email) {
-    return <div>No email selected</div>;
+    return <div className="mt-4">No email selected</div>;
   }
 
   return (
