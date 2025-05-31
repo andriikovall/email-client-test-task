@@ -6,10 +6,12 @@ import { useEmailsListController } from "./EmailsList.controller";
 
 export type EmailsListViewProps = {
   emails: Email[];
+  onReadOrUnread: (email: Email) => void;
+  onDelete: (email: Email) => void;
 };
 
 const EmailsListView = (props: EmailsListViewProps) => {
-  const { emails } = props;
+  const { emails, onReadOrUnread, onDelete } = props;
 
   if (!emails.length) {
     return <div className="text-center p-4">No emails in this folder</div>;
@@ -24,13 +26,8 @@ const EmailsListView = (props: EmailsListViewProps) => {
           <EmailItem
             key={email.id}
             email={email}
-            onReadOrUnread={function (): void {
-              // todo: add this to props
-              throw new Error("Function not implemented.");
-            }}
-            onDelete={function (): void {
-              throw new Error("Function not implemented.");
-            }}
+            onReadOrUnread={() => onReadOrUnread(email)}
+            onDelete={() => onDelete(email)}
             selected={false}
           />
         ))}

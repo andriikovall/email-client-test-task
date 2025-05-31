@@ -22,7 +22,6 @@ export const useEmailPreviewController = (): EmailPreviewViewProps => {
     if (!emailId) {
       return;
     }
-    console.log('emailId: IN CONTROLLER', emailId);
     EmailsService.markAsReadOrUnread(emailId);
   }, [emailId]);
 

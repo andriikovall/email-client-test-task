@@ -4,7 +4,7 @@ import { BrowserRouter } from "react-router";
 import { Subscribe } from "@react-rxjs/core";
 import App from "./lib/App.tsx";
 import "./index.css";
-// todo: import Bootstrap JS when needed
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

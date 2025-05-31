@@ -1,0 +1,16 @@
+.unread-indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 100%;
+  background-color: var(--bs-primary);
+}
+
+.email-item:hover .dropdown {
+  visibility: visible;
+}
+
+.email-item .dropdown {
+  visibility: hidden;
+}
