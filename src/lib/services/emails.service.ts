@@ -10,7 +10,6 @@ import type { Email, Folder } from "../types";
 import { MOCK_EMAILS } from "./mocks/emails";
 import { MOCK_FOLDERS } from "./mocks/folders";
 
-// todo: multicast
 class EmailsServiceClass {
   public readonly emails$ = new BehaviorSubject<Email[]>(MOCK_EMAILS);
 
@@ -18,11 +17,8 @@ class EmailsServiceClass {
     return this.emails$.pipe(
       delay(2000),
       // todo: check for default folder logic
-      map((emails) =>
-        emails.filter(
-          (email) => email.folderSlug === folder && !email.isDeleted
-        )
-      )
+      map((emails) => this.filterEmailsByFolderAndDeleted(emails, folder)),
+      map((emails) => this.sortEmails(emails))
     );
   }
 
@@ -43,7 +39,11 @@ class EmailsServiceClass {
   }
 
   public deleteEmail(email: Email): void {
-    if (!confirm(`Are you sure you want to delete the email from ${email.from.email}?`)) {
+    if (
+      !confirm(
+        `Are you sure you want to delete the email from ${email.from.email}?`
+      )
+    ) {
       return;
     }
     const currentEmails = this.emails$.getValue();
@@ -57,10 +57,25 @@ class EmailsServiceClass {
       map(([folders, emails]) =>
         folders.map((folder) => ({
           ...folder,
-          count: emails.filter((email) => email.folderSlug === folder.slug)
+          count: this.filterEmailsByFolderAndDeleted(emails, folder.slug)
             .length,
         }))
       )
+    );
+  }
+
+  private sortEmails(emails: Email[]): Email[] {
+    return [...emails].sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+    );
+  }
+
+  private filterEmailsByFolderAndDeleted(
+    emails: Email[],
+    folder: string
+  ): Email[] {
+    return emails.filter(
+      (email) => email.folderSlug === folder && !email.isDeleted
     );
   }
 }
