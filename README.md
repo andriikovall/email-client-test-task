@@ -102,7 +102,7 @@ I was picking between 3 approaches to manage RxJS state:
 2. [jet-blaze](https://readdle.github.io/jet-blaze/docs/examples)
 3. [react-rxjs](https://react-rxjs.org/) 
 
-I am usually skeptical about any black box solutions which have a steep learning curve so I firstly tried to write my simple custom hooks to manage the state of the observables. After couple of the first tries I failed. 
+I am usually skeptical about any black box solutions which have a steep learning curve so I firstly tried to write my simple custom hooks to manage the state of the observables. After couple of the first tries I failed - [commit](https://github.com/andriikovall/email-client-test-task/commit/ea4ab95d0a901e220a61b2e968f044b26eff8465). And then started to come back eventually - [commit](https://github.com/andriikovall/email-client-test-task/commit/2c284240b251182ff972d21ff7142d100345a9ed).
 
 Then I decided to use the [react-rxjs](https://react-rxjs.org/)  approach. It was the most straightforward and easy to understand in the beginning. Might not be the best approach in the long run, but given the time constraints and limited experience with `RxJS` in combination with `React` it was the best choice for me.
 
