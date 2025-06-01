@@ -1,7 +1,6 @@
 import {
   BehaviorSubject,
   combineLatest,
-  delay,
   filter,
   map,
   Observable,
@@ -9,14 +8,12 @@ import {
   tap,
 } from "rxjs";
 import type { Email, Folder } from "../types";
-import { MOCK_EMAILS } from "./mocks/emails";
+import { deleteEmail, getEmails, markAsReadOrUnread, MOCK_EMAILS } from "./mocks/emails";
 import { MOCK_FOLDERS } from "./mocks/folders";
 import { randomNumber } from "../utils/randomNumber";
 import { SUSPENSE } from "@rx-state/core";
 import { filterSuspense } from "../utils/rxjs-operators";
 import { isSuspense } from "../utils/isSuspense";
-
-const getEmails = (): Observable<Email[]> => of(MOCK_EMAILS).pipe(delay(2000));
 
 class EmailsServiceClass {
 
@@ -51,8 +48,7 @@ class EmailsServiceClass {
       email.id === id ? { ...email, isRead: !email.isRead } : email
     )
 
-    return of(undefined).pipe(
-      delay(1000),
+    return markAsReadOrUnread(id).pipe(
       tap(() => this.emails$.next(newEmails)),
     )
   }
@@ -73,8 +69,7 @@ class EmailsServiceClass {
 
     const newEmails = currentEmails.filter((e) => e.id !== email.id);
 
-    return of(undefined).pipe(
-      delay(1000),
+    return deleteEmail(email).pipe(
       tap(() => this.emails$.next(newEmails)),
     )
   }

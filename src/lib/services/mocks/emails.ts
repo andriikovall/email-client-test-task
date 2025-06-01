@@ -1,5 +1,16 @@
+import { delay } from "rxjs/operators";
+import { of } from "rxjs";
+import type { Observable } from "rxjs";
 import type { Email } from "../../types";
 import { MOCK_FOLDERS } from "./folders";
+
+// mock functions to simulate async operations
+export const getEmails = (): Observable<Email[]> => of(MOCK_EMAILS).pipe(delay(2000));
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const deleteEmail = (email: Email): Observable<void> => of(undefined).pipe(delay(1000));
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const markAsReadOrUnread = (id: string): Observable<void> => of(undefined).pipe(delay(1000));
+
 
 export const MOCK_EMAILS: Email[] = [
   {
