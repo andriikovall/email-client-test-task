@@ -61,6 +61,7 @@ Deployed with **Netlify**
     - [ ] Arrow keys to navigate between emails
     - [x] Enter to open email preview 
     - [x] Tabbing between emails and folders
+    - [x] Tabbing in email context menu
     - [ ] Escape to close email preview
     - [ ] Backspace to delete email
 - [x] Data storage

@@ -9,7 +9,8 @@
 
 .email-item:hover .dropdown,
 .email-item:focus .dropdown,
-.email-item:active .dropdown {
+.email-item:active .dropdown,
+.email-item:focus-within .dropdown {
   visibility: visible;
 }
 
