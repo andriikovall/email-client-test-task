@@ -9,7 +9,7 @@ export const RootNavigation = () => {
     <Routes>
       <Route path="/" element={<Navigate to={defaultPath} />} />
       <Route path="/folders/:folderSlug" Component={MainRoute}>
-        <Route path="email/:emailId?" Component={EmailPreview} />
+        <Route path="email?/:emailId?" Component={EmailPreview} />
       </Route>
       <Route path="*" element={<Navigate to={defaultPath} />} />
     </Routes>

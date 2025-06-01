@@ -13,7 +13,7 @@ const EmailPreviewView = (props: EmailPreviewViewProps) => {
   const { email, onDelete, onMarkAsReadOrUnread, sanitizedEmailHTML } = props;
 
   if (!email) {
-    return <div className="mt-4">No email selected</div>;
+    return <div className="text-center mt-4">No email selected</div>;
   }
 
   const from = email.from.name ? `${email.from.name} <${email.from.email}>` : email.from.email;
