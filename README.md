@@ -56,7 +56,7 @@ Deployed with **Netlify**
     - Added to any of the folders randomly
   - [x] Email has context menu to mark as read or unread and delete
   - [x] Empty state for the emails list of the folder
-  - [ ] Empty state for the email (after the email is deleted or url has the id of the missing email)
+  - [x] Empty state for the email (after the email is deleted or url has the id of the missing email)
   - [ ] Keyboard navigation
     - [ ] Arrow keys to navigate between emails
     - [x] Enter to open email preview 
