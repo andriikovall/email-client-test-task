@@ -1,18 +1,16 @@
-import { memo, Suspense } from "react";
+import React, { memo, Suspense } from "react";
 import { connectController } from "../../../utils/connectController";
 import { Folders } from "./components";
 import { EmailsList } from "./components/EmailsList";
 import { useMainRouteController } from "./MainRoute.controller";
 import { Outlet } from "react-router";
 
-export type MainRouteViewProps = {
+export type MainRouteViewProps = Readonly<{
   folderSlug: string;
   emailId: string | undefined;
-};
+}>;
 
-const MainRouteView = (props: MainRouteViewProps) => {
-  const { folderSlug, emailId } = props;
-
+const MainRouteView: React.FC<MainRouteViewProps> = ({ folderSlug, emailId }) => {
   return (
     <div className="row h-100">
       <div className="col-3 h-100 overflow-y-scroll border-end bg-body-tertiary">

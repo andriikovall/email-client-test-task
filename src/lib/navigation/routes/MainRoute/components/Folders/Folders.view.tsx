@@ -1,15 +1,14 @@
+import React from "react";
 import { NavLink } from "react-router";
 import type { Folder } from "../../../../../types";
 import { connectController } from "../../../../../utils/connectController";
 import { useFoldersController } from "./Folders.controller";
 
-export type FoldersViewProps = {
+export type FoldersViewProps = Readonly<{
   folders: Folder[];
-};
+}>;
 
-const FoldersView = (props: FoldersViewProps) => {
-  const { folders } = props;
-
+const FoldersView: React.FC<FoldersViewProps> = ({ folders }) => {
   return (
     <div className="p-4">
       <h2 className="h4 mb-3">Folders</h2>

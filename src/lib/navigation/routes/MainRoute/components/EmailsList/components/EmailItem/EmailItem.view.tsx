@@ -1,18 +1,17 @@
+import React from "react";
 import { NavLink } from "react-router";
 import type { Email } from "../../../../../../../types";
 import clsx from "clsx";
 import { Dropdown } from "../../../../../../../components";
 import "./EmailItem.styles.css";
 
-type EmailItemViewProps = {
+type EmailItemViewProps = Readonly<{
   email: Email;
   onReadOrUnread: () => void;
   onDelete: () => void;
-};
+}>;
 
-const EmailItemView = (props: EmailItemViewProps) => {
-  const { email, onDelete, onReadOrUnread } = props;
-
+const EmailItemView: React.FC<EmailItemViewProps> = ({ email, onDelete, onReadOrUnread }) => {
   const date = new Date(email.date).toLocaleDateString("en-US", {
     year: "numeric",
     month: "short",

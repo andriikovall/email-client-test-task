@@ -1,15 +1,14 @@
-import { useId } from "react";
+import React, { useId } from "react";
 
 // not passing any `open` props just for simplicity
-export type DropdownViewProps = {
+export type DropdownViewProps = Readonly<{
   items: {
     label: string;
     onClick: () => void;
   }[];
-};
+}>;
 
-const DropdownView = (props: DropdownViewProps) => {
-  const { items } = props;
+const DropdownView: React.FC<DropdownViewProps> = ({ items }) => {
   const id = useId();
 
   return (

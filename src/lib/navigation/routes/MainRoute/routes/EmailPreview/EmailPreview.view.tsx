@@ -1,17 +1,21 @@
+import React from "react";
 import type { Email } from "../../../../../types";
 import { connectController } from "../../../../../utils/connectController";
 import { useEmailPreviewController } from "./EmailPreview.controller";
 
-export type EmailPreviewViewProps = {
+export type EmailPreviewViewProps = Readonly<{
   email: Email | undefined;
   onMarkAsReadOrUnread: () => void;
   onDelete: () => void;
   sanitizedEmailHTML: string;
-};
+}>;
 
-const EmailPreviewView = (props: EmailPreviewViewProps) => {
-  const { email, onDelete, onMarkAsReadOrUnread, sanitizedEmailHTML } = props;
-
+const EmailPreviewView: React.FC<EmailPreviewViewProps> = ({ 
+  email, 
+  onDelete, 
+  onMarkAsReadOrUnread, 
+  sanitizedEmailHTML 
+}) => {
   if (!email) {
     return <div className="text-center mt-4">No email selected</div>;
   }

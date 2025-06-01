@@ -1,18 +1,16 @@
-import { memo } from "react";
+import React, { memo } from "react";
 import type { Email } from "../../../../../types";
 import { connectController } from "../../../../../utils/connectController";
 import { EmailItem } from "./components";
 import { useEmailsListController } from "./EmailsList.controller";
 
-export type EmailsListViewProps = {
+export type EmailsListViewProps = Readonly<{
   emails: Email[];
   onReadOrUnread: (email: Email) => void;
   onDelete: (email: Email) => void;
-};
+}>;
 
-const EmailsListView = (props: EmailsListViewProps) => {
-  const { emails, onReadOrUnread, onDelete } = props;
-
+const EmailsListView: React.FC<EmailsListViewProps> = ({ emails, onReadOrUnread, onDelete }) => {
   if (!emails.length) {
     return <div className="text-center p-4">No emails in this folder</div>;
   }

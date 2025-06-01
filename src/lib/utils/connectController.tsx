@@ -1,11 +1,11 @@
-import type { ComponentType } from "react";
+import React, { type ComponentType } from "react";
 import hoistNonReactStatics from "hoist-non-react-statics";
 
 export const connectController = <THookProps, TComponentProps extends object>(
-  useComponentViewProps: (props: THookProps) => TComponentProps,
+  useComponentViewProps: (props: Readonly<THookProps>) => TComponentProps,
   Component: ComponentType<TComponentProps>
 ) => {
-  const EnhancedComponent = (props: THookProps) => {
+  const EnhancedComponent: React.FC<THookProps> = (props) => {
     const componentProps = useComponentViewProps(props);
     return <Component {...componentProps} />;
   };
