@@ -69,30 +69,13 @@ Deployed with **Netlify**
   - [x] Simulate network request and delay
 
 
-Ignored for the sake of the test task:
-- JS chunking, lazy loading, code splitting
-- Custom linting to enforce project conventions
-- Any proper caching
-- Error handling
-- TS import path config
-- Lazy loading scroll feature for the emails list (currently it's just a list long list of the emails all together)
-- UI is very simple
-- No responsive design for the mobile
-- Email preview implemented in the simplest way possible with basic sanitization [sanitize-html](https://www.npmjs.com/package/sanitize-html) and putting HTML to the DOM directly
-- In some places used icons in other places used text emojis
-- ect...
-
 ## Tech challenges faced and their solutions
 
 ### Managing the navigation
 
-Most of my professional carrier I have been working with `React Native` where the navigation is mostly handled manually and the concept of the URL is not a common thing.
-
-I decided to rely on the `React Router` and bind the app UI state to the router. Given that I had a previous experience with `React Router` it was the most straightforward approach for me. It's also a standard de facto now.
-
 I decided to bind the app UI state to the router. This is a common approach which sets user in center by allowing for example to copy the url and get back to the same state when needed. Other email clients like `Gmail` or `Outlook` also use this approach.
 
-It wasn't a pleasant experience, I had issues with `Suspense`, proper routing, route fallbacks and other edge cases. Some of them might not be covered in scope of the test task.
+It wasn't a pleasant experience, I had issues with `Suspense`, proper routing, route fallbacks and other edge cases
 
 ### Picking the right approach to manage RxJS state
 
@@ -134,39 +117,16 @@ The `view` file is a pure component which is responsible for the UI. The `contro
 
 This is the simplest example of the architecture which decouples the UI from the business logic and the state management.
 
-This was crucial for me to keep the `RxJS` and other state stuff separated.
-
 Example of the `EmailsList.view.tsx` component:
 
 ```tsx
 export type EmailsListViewProps = {
-  emails: Email[];
-  onReadOrUnread: (email: Email) => void;
-  onDelete: (email: Email) => void;
+  // ..
 };
 
 const EmailsListView = (props: EmailsListViewProps) => {
   const { emails, onReadOrUnread, onDelete } = props;
-
-  if (!emails.length) {
-    return <div className="text-center p-4">No emails in this folder</div>;
-  }
-
-  return (
-    <>
-      <h2 className="h4 mt-4">Emails</h2>
-      <ul className="list-unstyled d-grid gap-2">
-        {emails.map((email) => (
-          <EmailItem
-            key={email.id}
-            email={email}
-            onReadOrUnread={() => onReadOrUnread(email)}
-            onDelete={() => onDelete(email)}
-          />
-        ))}
-      </ul>
-    </>
-  );
+  // UI part ...
 };
 
 export const EmailsList = memo(
@@ -174,7 +134,7 @@ export const EmailsList = memo(
 );
 ```
 
-Example of the `Header.controller.tsx` file:
+Example of the `EmailsList.controller.tsx` file:
 
 ```tsx
 const [useEmails] = bind((folder: string) =>
@@ -188,13 +148,7 @@ export const useEmailsListController = (): EmailsListViewProps => {
 
   const emails = useEmails(folder);
 
-  const onReadOrUnread = useCallback((email: Email) => {
-    EmailsService.markAsReadOrUnread(email.id);
-  }, []);
-
-  const onDelete = useCallback((email: Email) => {
-    EmailsService.deleteEmail(email);
-  }, []);
+  // other hooks calls ...
 
   if (!folderSlugParam) {
     return {
@@ -230,11 +184,12 @@ In future it's better to give the services less responsibility and split them to
 
 Initially I had an issue of using the `BehavioralSubject` for the UI state. It wasn't obvious if it's OK to handle the UI and the requests observables separately. Even though it sounds reasonable and resembles the default request -> setState approach, I doubted it and was looking for something else without building a whole bunch of custom observables.
 
-It appears that it's OK to handle the UI and the requests observables separately and eventually combine them in the components. This is how it's done and recommended by the libraries like `react-rxjs` and `jet-blaze` even though it adds some decent amount of boilerplate.
+It appears that it's OK to handle the UI and the requests observables separately and eventually combine them in the components. This is how it's done and recommended by the libraries like `react-rxjs` and `jet-blaze`.
 
 Eventual approach:
 
 - Used `delay` operator to simulate the network request.
 - Used `useObservableAction` hook to manage the actions and their loading states.
-- Hold a separate `BehaviorSubject` for the UI state and subscribe to the backend requests manually. On the scale this will lead to some shared methods for data fetching of the services, disposal methods, etc.
+- Hold a separate `BehaviorSubject` for the UI state and subscribe to the backend requests manually
+
 
