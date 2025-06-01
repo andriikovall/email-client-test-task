@@ -14,7 +14,7 @@
     - [Defining the architecture](#defining-the-architecture)
       - [Components](#components)
       - [Services](#services)
-    - [Managing the Suspense and loading states ⏳](#managing-the-suspense-and-loading-states-)
+    - [Managing the Suspense and loading states](#managing-the-suspense-and-loading-states)
 
 ## Overview
 This is a test task for the Senior Software Engineer job. The goal of this task is to implement a simple mail client using `React` and `RxJS` as a state manager.
@@ -66,7 +66,7 @@ Deployed with **Netlify**
     - [ ] Backspace to delete email
 - [x] Data storage
   - [x] Mock data is stored in the `src/lib/services/mocks/emails.ts` file
-  - [ ] Simulate network request and delay (had issues with `Suspense` and loading, will share the details below)
+  - [x] Simulate network request and delay
 
 
 Ignored for the sake of the test task:
@@ -226,8 +226,15 @@ src/lib/services
 
 In future it's better to give the services less responsibility and split them to data manipulation, data fetching and data caching.
 
-### Managing the Suspense and loading states ⏳
+### Managing the Suspense and loading states
 
-I still encounter issues with the `Suspense` and loading states for the actions like deleting the email or making it read. I used `delay` operator to simulate the network request and delay and I didn't understand how to properly handle the loading state.
+Initially I had an issue of using the `BehavioralSubject` for the UI state. It wasn't obvious if it's OK to handle the UI and the requests observables separately. Even though it sounds reasonable and resembles the default request -> setState approach, I doubted it and was looking for something else without building a whole bunch of custom observables.
 
-Still looking for the best approach to handle this in terms of the `RxJS`, `Suspense` and `React`. It should be some kind of a `React` `transition`. WIP
+It appears that it's OK to handle the UI and the requests observables separately and eventually combine them in the components. This is how it's done and recommended by the libraries like `react-rxjs` and `jet-blaze` even though it adds some decent amount of boilerplate.
+
+Eventual approach:
+
+- Used `delay` operator to simulate the network request.
+- Used `useObservableAction` hook to manage the actions and their loading states.
+- Hold a separate `BehaviorSubject` for the UI state and subscribe to the backend requests manually. On the scale this will lead to some shared methods for data fetching of the services, disposal methods, etc.
+

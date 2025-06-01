@@ -19,6 +19,7 @@ class EmailsServiceClass {
 
   private readonly emails$ = new BehaviorSubject<Email[] | SUSPENSE>(SUSPENSE);
 
+  // consciously not unsubscribing because of the test task
   constructor() {
     getEmails().subscribe((emails) => this.emails$.next(emails));
   }
