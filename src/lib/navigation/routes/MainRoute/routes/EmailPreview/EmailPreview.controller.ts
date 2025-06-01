@@ -11,7 +11,7 @@ const [useEmail] = bind((emailId: string | undefined) => {
   if (!emailId) {
     return of(undefined);
   }
-  return EmailsService.getEmailById(emailId);
+  return EmailsService.getEmailById$(emailId);
 });
 
 export const useEmailPreviewController = (): EmailPreviewViewProps => {
@@ -23,14 +23,14 @@ export const useEmailPreviewController = (): EmailPreviewViewProps => {
     if (!email) {
       return of(undefined);
     }
-    return EmailsService.markAsReadOrUnread(email.id);
+    return EmailsService.markAsReadOrUnread$(email.id);
   });
 
   const [onDelete, { loading: isDeleteLoading }] = useObservableAction(() => {
     if (!email) {
       return of(undefined);
     }
-    return EmailsService.deleteEmail(email);
+    return EmailsService.deleteEmail$(email);
   });
 
   const sanitizedEmailHTML = useMemo(() => {

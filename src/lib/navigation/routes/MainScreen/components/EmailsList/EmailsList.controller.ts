@@ -3,8 +3,6 @@ import type { EmailsListViewProps } from "./EmailsList.view";
 import { EmailsService } from "../../../../../services/emails.service";
 import { bind } from "@react-rxjs/core";
 import { DEFAULT_FOLDER_SLUG } from "../../../../../constants/folders";
-import type { Email } from "../../../../../types";
-import { useObservableAction } from "../../../../../utils/useObservableAction";
 
 const [useEmails] = bind((folder: string) =>
   EmailsService.getEmailsByFolder$(folder)
@@ -17,29 +15,13 @@ export const useEmailsListController = (): EmailsListViewProps => {
 
   const emails = useEmails(folder);
 
-  // todo: maybe move this to a separate hook and reuse it?
-  const [onReadOrUnread] =
-    useObservableAction((email: Email) => {
-      return EmailsService.markAsReadOrUnread$(email.id);
-    });
-
-  const [onDelete] = useObservableAction(
-    (email: Email) => {
-      return EmailsService.deleteEmail$(email);
-    }
-  );
-
   if (!folderSlugParam) {
     return {
       emails: [],
-      onReadOrUnread,
-      onDelete,
     };
   }
 
   return {
     emails,
-    onReadOrUnread,
-    onDelete,
   };
 };
