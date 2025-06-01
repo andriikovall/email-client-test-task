@@ -23,7 +23,7 @@ class EmailsServiceClass {
     getEmails().subscribe((emails) => this.emails$.next(emails));
   }
 
-  public getEmailsByFolder$(folder: string): Observable<Email[]> {
+  public getEmailsByFolder(folder: string): Observable<Email[]> {
     return this.emails$.pipe(
       filterSuspense(),
       map((emails) => this.filterEmailsByFolderAndDeleted(emails, folder)),
@@ -31,7 +31,7 @@ class EmailsServiceClass {
     );
   }
 
-  public getEmailById$(id: string): Observable<Email | undefined> {
+  public getEmailById(id: string): Observable<Email | undefined> {
     return this.emails$.pipe(
       // bth I don't like this filtering everywhere, there must be a better way to do this
       filterSuspense(),
@@ -39,7 +39,7 @@ class EmailsServiceClass {
     );
   }
 
-  public markAsReadOrUnread$(id: string): Observable<void> {
+  public markAsReadOrUnread(id: string): Observable<void> {
     const currentEmails = this.emails$.getValue();
     if (isSuspense(currentEmails)) {
       return of(undefined);
@@ -53,7 +53,7 @@ class EmailsServiceClass {
     )
   }
 
-  public deleteEmail$(email: Email): Observable<void> {
+  public deleteEmail(email: Email): Observable<void> {
     const currentEmails = this.emails$.getValue();
     if (isSuspense(currentEmails)) {
       return of(undefined);
@@ -74,7 +74,7 @@ class EmailsServiceClass {
     )
   }
 
-  public getFolders$(): Observable<Folder[]> {
+  public getFolders(): Observable<Folder[]> {
     return combineLatest([of(MOCK_FOLDERS), this.emails$]).pipe(
       filter(([, emails]) => !isSuspense(emails)),
       map(([folders, emails]) =>

@@ -7,7 +7,7 @@ import type { Email } from "../../../../../types";
 import { useObservableAction } from "../../../../../utils/useObservableAction";
 
 const [useEmails] = bind((folder: string) =>
-  EmailsService.getEmailsByFolder$(folder)
+  EmailsService.getEmailsByFolder(folder)
 );
 
 export const useEmailsListController = (): EmailsListViewProps => {
@@ -20,12 +20,12 @@ export const useEmailsListController = (): EmailsListViewProps => {
   // todo: maybe move this to a separate hook and reuse it?
   const [onReadOrUnread] =
     useObservableAction((email: Email) => {
-      return EmailsService.markAsReadOrUnread$(email.id);
+      return EmailsService.markAsReadOrUnread(email.id);
     });
 
   const [onDelete] = useObservableAction(
     (email: Email) => {
-      return EmailsService.deleteEmail$(email);
+      return EmailsService.deleteEmail(email);
     }
   );
 
