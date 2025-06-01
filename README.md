@@ -70,6 +70,7 @@ Deployed with **Netlify**
 
 
 Ignored for the sake of the test task:
+- JS chunking, lazy loading, code splitting
 - Any proper caching
 - Error handling
 - TS import path config
