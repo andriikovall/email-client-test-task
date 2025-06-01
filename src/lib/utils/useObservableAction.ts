@@ -1,29 +1,41 @@
 import { useCallback, useState } from "react";
-import type { Observable } from "rxjs";
+import { firstValueFrom, type Observable } from "rxjs";
+import { useEventCallback } from "./useEventCallback";
 
-type UseObservableActionResult<T> = [
-  execute: () => void,
-  { loading: boolean; error: Error | undefined; data: T | undefined }
+type UseObservableActionResult<TArgs extends unknown[], TRes> = [
+  execute: (...args: TArgs) => Promise<TRes>,
+  { loading: boolean; error: Error | undefined; data: TRes | undefined }
 ];
 
-export const useObservableAction = <T>(
-  action: () => Observable<T>
-): UseObservableActionResult<T> => {
-  const [data, setData] = useState<T | undefined>(undefined);
+export const useObservableAction = <TArgs extends unknown[], TRes>(
+  action: (...args: TArgs) => Observable<TRes>
+): UseObservableActionResult<TArgs, TRes> => {
+  const [data, setData] = useState<TRes | undefined>(undefined);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | undefined>(undefined);
 
-  const execute = useCallback(() => {
-    setLoading(true);
-    setError(undefined);
-    setData(undefined);
+  // this will always be safe to put in the hook dependencies
+  const actionCallback = useEventCallback(action);
 
-    action().subscribe({
-      next: (data) => setData(data),
-      error: (error) => setError(error),
-      complete: () => setLoading(false),
-    });
-  }, [action]);
+  const execute = useCallback(
+    (...args: TArgs) => {
+      setLoading(true);
+      setError(undefined);
+      setData(undefined);
+
+      return firstValueFrom(actionCallback(...args))
+        .then((res) => {
+          setData(res);
+          return res;
+        })
+        .catch((err) => {
+          setError(err);
+          throw err;
+        })
+        .finally(() => setLoading(false));
+    },
+    [actionCallback]
+  );
 
   return [execute, { loading, error, data }];
 };

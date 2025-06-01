@@ -1,9 +1,11 @@
 import {
   BehaviorSubject,
   combineLatest,
+  delay,
   map,
   Observable,
   of,
+  tap,
 } from "rxjs";
 import type { Email, Folder } from "../types";
 import { MOCK_EMAILS } from "./mocks/emails";
@@ -13,6 +15,7 @@ import { randomNumber } from "../utils/randomNumber";
 class EmailsServiceClass {
   public readonly emails$ = new BehaviorSubject<Email[]>(MOCK_EMAILS);
 
+  // todo: $ to the end of the method name with observable
   public getEmailsByFolder(folder: string): Observable<Email[]> {
     return this.emails$.pipe(
       map((emails) => this.filterEmailsByFolderAndDeleted(emails, folder)),
@@ -26,25 +29,34 @@ class EmailsServiceClass {
     );
   }
 
-  public markAsReadOrUnread(id: string): void {
+  public markAsReadOrUnread(id: string): Observable<void> {
     const currentEmails = this.emails$.getValue();
     const newEmails = currentEmails.map((email) =>
       email.id === id ? { ...email, isRead: !email.isRead } : email
     )
-    this.emails$.next(newEmails);
+
+    return of(undefined).pipe(
+      // todo: check if this works
+      delay(1000),
+      tap(() => this.emails$.next(newEmails)),
+    )
   }
 
-  public deleteEmail(email: Email): void {
+  public deleteEmail(email: Email): Observable<void> {
     if (
       !confirm(
         `Are you sure you want to delete the email from ${email.from.email}?`
       )
     ) {
-      return;
+      return of(undefined);
     }
     const currentEmails = this.emails$.getValue();
     const newEmails = currentEmails.filter((e) => e.id !== email.id);
-    this.emails$.next(newEmails);
+
+    return of(undefined).pipe(
+      delay(1000),
+      tap(() => this.emails$.next(newEmails)),
+    )
   }
 
   public getFolders(): Observable<Folder[]> {

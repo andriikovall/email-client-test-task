@@ -4,14 +4,22 @@ import type { Email } from "../../../../../../../types";
 import clsx from "clsx";
 import { Dropdown } from "../../../../../../../components";
 import "./EmailItem.styles.css";
+import { connectController } from "../../../../../../../utils/connectController";
+import { useEmailItemController } from "./EmailItem.controller";
 
-type EmailItemViewProps = Readonly<{
+export type EmailItemViewProps = Readonly<{
   email: Email;
   onReadOrUnread: () => void;
   onDelete: () => void;
+  loading: boolean;
 }>;
 
-const EmailItemView: React.FC<EmailItemViewProps> = ({ email, onDelete, onReadOrUnread }) => {
+const EmailItemView: React.FC<EmailItemViewProps> = ({
+  email,
+  onDelete,
+  onReadOrUnread,
+  loading,
+}) => {
   const date = new Date(email.date).toLocaleDateString("en-US", {
     year: "numeric",
     month: "short",
@@ -28,15 +36,20 @@ const EmailItemView: React.FC<EmailItemViewProps> = ({ email, onDelete, onReadOr
     <NavLink
       to={`email/${email.id}`}
       className={({ isActive }) =>
-        clsx("card btn btn-light text-start email-item", {
+        clsx("card btn btn-light text-start email-item p-0", {
           "bg-secondary bg-opacity-25": isActive,
           "bg-primary bg-opacity-10": !email.isRead,
         })
       }
       viewTransition
     >
+      {loading ? (
+        <div className="position-absolute w-100 h-100 justify-content-center align-items-center d-flex bg-light bg-opacity-50">
+          <div className="spinner-grow" />
+        </div>
+      ) : null}
       {!email.isRead ? <div className="unread-indicator" /> : null}
-      <div className="card-body p-2">
+      <div className="card-body p-3">
         <div className="d-flex justify-content-between">
           <h3 className="card-title h5">{email.subject}</h3>
           <Dropdown
@@ -65,4 +78,7 @@ const EmailItemView: React.FC<EmailItemViewProps> = ({ email, onDelete, onReadOr
   );
 };
 
-export const EmailItem = EmailItemView;
+export const EmailItem = connectController(
+  useEmailItemController,
+  EmailItemView
+);

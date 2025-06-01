@@ -6,11 +6,15 @@ import { useEmailsListController } from "./EmailsList.controller";
 
 export type EmailsListViewProps = Readonly<{
   emails: Email[];
-  onReadOrUnread: (email: Email) => void;
-  onDelete: (email: Email) => void;
+  onReadOrUnread: (email: Email) => Promise<void>;
+  onDelete: (email: Email) => Promise<void>;
 }>;
 
-const EmailsListView: React.FC<EmailsListViewProps> = ({ emails, onReadOrUnread, onDelete }) => {
+const EmailsListView: React.FC<EmailsListViewProps> = ({
+  emails,
+  onReadOrUnread,
+  onDelete,
+}) => {
   if (!emails.length) {
     return <div className="text-center p-4">No emails in this folder</div>;
   }
