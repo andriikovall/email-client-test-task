@@ -59,11 +59,10 @@ Deployed with **Netlify**
   - [x] Empty state for the email (after the email is deleted or url has the id of the missing email)
   - [ ] Keyboard navigation
     - [ ] Arrow keys to navigate between emails
-    - [x] Enter to open email preview 
+    - [ ] Enter to open email preview and focus on the email preview
     - [x] Tabbing between emails and folders
     - [x] Tabbing in email context menu
     - [ ] Escape to close email preview
-    - [ ] Right arrow on the email item to focus on email preview
     - [ ] Backspace to delete email
 - [x] Data storage
   - [x] Mock data is stored in the `src/lib/services/mocks/emails.ts` file
