@@ -91,16 +91,7 @@ Then I decided to use the [react-rxjs](https://react-rxjs.org/)  approach. It wa
 
 ### Defining the architecture
 
-There are examples of the [jet-blaze Todo app](https://github.com/readdle/jet-blaze/tree/main/examples/todo-mvc) and [React-RxJS Todo app](https://react-rxjs.org/docs/tutorial/todos) which I used as a reference. Given my low familiarity with `RxJS` + `React` + `signals` together I decided to go with the simplest custom architecture. 
-
-The positive sides are:
-- Low learning curve, quicker start
-- No need to learn the `signals` concept, just `RxJS` and `React-RxJS`
-
-The downsides are:
-- Boilerplate
-- Not battle tested yet
-- Custom architecture with no documentation
+There are examples of the [jet-blaze Todo app](https://github.com/readdle/jet-blaze/tree/main/examples/todo-mvc) and [React-RxJS Todo app](https://react-rxjs.org/docs/tutorial/todos) which I used as a reference. Given my low familiarity with `RxJS` + `React` + `signals` together, I decided to go with the simplest custom architecture to start with. 
 
 #### Components
 
