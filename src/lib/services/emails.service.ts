@@ -35,7 +35,6 @@ class EmailsServiceClass {
     )
 
     return of(undefined).pipe(
-      // todo: check if this works
       delay(1000),
       tap(() => this.emails$.next(newEmails)),
     )
