@@ -4,7 +4,8 @@ import { EmailsService } from "../../../../../services/emails.service";
 import { of } from "rxjs";
 import { bind } from "@react-rxjs/core";
 import { sanitizeHTML } from "./utils/sanitizeHtml";
-import { useCallback, useMemo } from "react";
+import { useMemo } from "react";
+import { useObservableAction } from "../../../../../utils/useObservableAction";
 
 const [useEmail] = bind((emailId: string | undefined) => {
   if (!emailId) {
@@ -18,19 +19,19 @@ export const useEmailPreviewController = (): EmailPreviewViewProps => {
 
   const email = useEmail(emailId);
 
-  const onMarkAsReadOrUnread = useCallback(() => {
-    if (!emailId) {
-      return;
-    }
-    EmailsService.markAsReadOrUnread(emailId);
-  }, [emailId]);
-
-  const onDelete = useCallback(() => {
+  const [onReadOrUnread, { loading: isReadOrUnreadLoading }] = useObservableAction(() => {
     if (!email) {
-      return;
+      return of(undefined);
     }
-    EmailsService.deleteEmail(email);
-  }, [email]);
+    return EmailsService.markAsReadOrUnread(email.id);
+  });
+
+  const [onDelete, { loading: isDeleteLoading }] = useObservableAction(() => {
+    if (!email) {
+      return of(undefined);
+    }
+    return EmailsService.deleteEmail(email);
+  });
 
   const sanitizedEmailHTML = useMemo(() => {
     if (!email) {
@@ -42,7 +43,8 @@ export const useEmailPreviewController = (): EmailPreviewViewProps => {
   return {
     email,
     sanitizedEmailHTML,
-    onMarkAsReadOrUnread,
+    onMarkAsReadOrUnread: onReadOrUnread,
     onDelete,
+    loading: isReadOrUnreadLoading || isDeleteLoading,
   };
 };

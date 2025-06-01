@@ -17,6 +17,7 @@ export const useEmailsListController = (): EmailsListViewProps => {
 
   const emails = useEmails(folder);
 
+  // todo: maybe move this to a separate hook and reuse it?
   const [onReadOrUnread] =
     useObservableAction((email: Email) => {
       return EmailsService.markAsReadOrUnread(email.id);

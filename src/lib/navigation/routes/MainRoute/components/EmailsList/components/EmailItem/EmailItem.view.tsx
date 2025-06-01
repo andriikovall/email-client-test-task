@@ -6,6 +6,7 @@ import { Dropdown } from "../../../../../../../components";
 import "./EmailItem.styles.css";
 import { connectController } from "../../../../../../../utils/connectController";
 import { useEmailItemController } from "./EmailItem.controller";
+import { LoadingOverlay } from "../../../../../../../components/LoadingOverlay";
 
 export type EmailItemViewProps = Readonly<{
   email: Email;
@@ -43,11 +44,7 @@ const EmailItemView: React.FC<EmailItemViewProps> = ({
       }
       viewTransition
     >
-      {loading ? (
-        <div className="position-absolute w-100 h-100 justify-content-center align-items-center d-flex bg-light bg-opacity-50">
-          <div className="spinner-grow" />
-        </div>
-      ) : null}
+      <LoadingOverlay loading={loading} />
       {!email.isRead ? <div className="unread-indicator" /> : null}
       <div className="card-body p-3">
         <div className="d-flex justify-content-between">

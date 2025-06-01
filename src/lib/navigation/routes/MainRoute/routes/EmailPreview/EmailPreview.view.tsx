@@ -2,19 +2,22 @@ import React from "react";
 import type { Email } from "../../../../../types";
 import { connectController } from "../../../../../utils/connectController";
 import { useEmailPreviewController } from "./EmailPreview.controller";
+import { LoadingOverlay } from "../../../../../components/LoadingOverlay";
 
 export type EmailPreviewViewProps = Readonly<{
   email: Email | undefined;
   onMarkAsReadOrUnread: () => void;
   onDelete: () => void;
   sanitizedEmailHTML: string;
+  loading: boolean;
 }>;
 
 const EmailPreviewView: React.FC<EmailPreviewViewProps> = ({ 
   email, 
   onDelete, 
   onMarkAsReadOrUnread, 
-  sanitizedEmailHTML 
+  sanitizedEmailHTML,
+  loading,
 }) => {
   if (!email) {
     return <div className="text-center mt-4">No email selected</div>;
@@ -32,6 +35,7 @@ const EmailPreviewView: React.FC<EmailPreviewViewProps> = ({
 
   return (
     <div className="card border-0">
+      <LoadingOverlay loading={loading} />
       <div className="card-body p-4">
         <div className="d-flex justify-content-between align-items-center mb-3">
           <h2 className="h4 mb-0 card-title me-2">{email.subject}</h2>
