@@ -19,7 +19,6 @@ const EmailsListView = (props: EmailsListViewProps) => {
 
   return (
     <>
-      {/* todo: pin title */}
       <h2 className="h4 mt-4">Emails</h2>
       <ul className="list-unstyled d-grid gap-2">
         {emails.map((email) => (

@@ -36,7 +36,6 @@ const EmailPreviewView = (props: EmailPreviewViewProps) => {
               className="btn btn-light"
               onClick={onMarkAsReadOrUnread}
             >
-              {/* todo: store icons in a separate file */}
               {email.isRead ? '📕 Unread' : '📖 Read'}
             </button>
             <button 

@@ -10,6 +10,5 @@ export const useMainRouteController = (): MainRouteViewProps => {
   return {
     folderSlug: folder,
     emailId,
-    // todo: on presses
   };
 };

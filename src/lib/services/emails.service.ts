@@ -13,7 +13,6 @@ import { randomNumber } from "../utils/randomNumber";
 class EmailsServiceClass {
   public readonly emails$ = new BehaviorSubject<Email[]>(MOCK_EMAILS);
 
-  // todo: loading and delays
   public getEmailsByFolder(folder: string): Observable<Email[]> {
     return this.emails$.pipe(
       map((emails) => this.filterEmailsByFolderAndDeleted(emails, folder)),

@@ -2,7 +2,6 @@ import { memo, Suspense } from "react";
 import { connectController } from "../../../utils/connectController";
 import { Folders } from "./components";
 import { EmailsList } from "./components/EmailsList";
-// todo: pretty import paths
 import { useMainRouteController } from "./MainRoute.controller";
 import { Outlet } from "react-router";
 
