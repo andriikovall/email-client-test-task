@@ -63,7 +63,6 @@ Deployed with **Netlify**
     - [x] Tabbing between emails and folders
     - [x] Tabbing in email context menu
     - [ ] Escape to close email preview
-    - [ ] Backspace to delete email
 - [x] Data storage
   - [x] Mock data is stored in the `src/lib/services/mocks/emails.ts` file
   - [x] Simulate network request and delay
